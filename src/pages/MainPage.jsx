@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import './MainPage.css';
 import Navbar1 from './Navbar1';
 import Footer from './Footer';
-import { FaPlane, FaHotel, FaUmbrellaBeach, FaConciergeBell } from 'react-icons/fa';
 
 const destinations = [
   {
@@ -76,50 +75,6 @@ const suggestions = [
 ];
 
 
-const Services = () => {
-  return (
-      <div className="services-container">
-          <div className="container">
-              <h2 className="tt">Our Services</h2>
-              <div className="services-grid">
-                  {services.map((service, index) => (
-                      <div key={index} className="service-card">
-                          <div className="icon-container">{service.icon}</div>
-                          <h3 className="service-title">{service.title}</h3>
-                          <p className="service-description">{service.description}</p>
-                      </div>
-                  ))}
-              </div>
-          </div>
-      </div>
-  );
-};
-const services = [
-    {
-        icon: <FaPlane className="text-4xl text-blue-500" />,
-        title: 'Flight Booking',
-        description: 'Flight ticket booking is simple in a few steps.',
-    },
-    {
-        icon: <FaHotel className="text-4xl text-blue-500" />,
-        title: 'Hotel Booking',
-        description: 'Wonderful hotel rooms at discounted prices.',
-    },
-    {
-        icon: <FaUmbrellaBeach className="text-4xl text-blue-500" />,
-        title: 'Beach Tours',
-        description: 'Explore beautiful beaches.',
-    },
-    {
-        icon: <FaConciergeBell className="text-4xl text-blue-500" />,
-        title: 'Concierge Services',
-        description: 'Offering you customized services.',
-    },
-
-];
-
-
-
 const MainPage = () => {
   const popularRef = useRef(null);
   const suggestionRef = useRef(null);
@@ -179,7 +134,6 @@ const MainPage = () => {
           <button className="nav-button" onClick={() => scrollRight(suggestionRef)}>▶</button>
         </div>
       </section>
-      <Services />
       <Footer />
     </>
   );
