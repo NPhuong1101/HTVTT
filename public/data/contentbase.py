@@ -1,55 +1,45 @@
-# import pandas as pd
-# from sklearn.feature_extraction.text import TfidfVectorizer
-
-# data = pd.read_csv(filepath_or_buffer:"data.csv", encoding="latin-1", sep=",", usecols=["title", "genré"])
-# user_input = "Twelve Monkey (1995)"
-# data["genres"].apply(lambda s: s.replace("|", " "))
-
-# vectorizer = TfidVectorizer(ngram_range=(1, 1))
-# tfidf_matrix = vectorizer.fit_transform(data["genres"])
-
-# tfidf_matrix_dense = pd.DataFrame(tfidf_matrix.todense(), columns=vectorizer.get_feature_names_out(), index=data["title"])
-
-# cosine_sim = cosine_similarity(tfidf_matrix)
-# cosine_sim_dense = pd.DataFrame(cosine_sim, columns=data["title"], index=data["title"])
-# user_input = "Twelve Monkey (1995)"
-# top_k = 30
-# relevant_data = cosine_sim_dense.loc[user_input].sort_values(ascending=False)[:top_k]
-
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+import json
+import sys
+import os
 
-# Đọc dữ liệu từ file CSV
-data = pd.read_csv("Info-trip.csv", encoding="utf-8")
+current_dir = os.path.dirname(os.path.abspath(__file__))
+csv_path = os.path.join(current_dir, "Info-trip.csv")
 
-# Kiểm tra các cột trong CSV để xem đúng tên cột nào
-print(data.columns)
+data = pd.read_csv(csv_path, encoding="utf-8")
 
-# Đổi tên cột nếu cần thiết
-data.rename(columns={"Tên địa điểm": "title", "Mô tả": "content"}, inplace=True)
+data.rename(columns={
+    "Tên địa điểm": "title",
+    "Mô tả": "description",
+    "Thể loại": "category",
+    "Tỉnh thành": "location",
+    "ID Ảnh URL địa điểm": "image",
+    "Link google map": "map_link"
+}, inplace=True)
 
-# Xử lý dữ liệu mô tả (có thể thêm bước xử lý văn bản nếu cần)
-data["content"] = data["content"].fillna("")
+data["content"] = data["description"].fillna("") + " " + data["category"].fillna("") + " " + data["location"].fillna("")
 
-# Áp dụng TF-IDF lên cột mô tả
-vectorizer = TfidfVectorizer(ngram_range=(1, 1), stop_words="english")
+# TF-IDF
+vectorizer = TfidfVectorizer(stop_words="english")
 tfidf_matrix = vectorizer.fit_transform(data["content"])
-
-# Tính độ tương đồng cosine
 cosine_sim = cosine_similarity(tfidf_matrix)
 
-# Tạo bảng similarity theo tên địa điểm
-cosine_sim_df = pd.DataFrame(cosine_sim, index=data["title"], columns=data["title"])
+if len(sys.argv) < 2:
+    print(json.dumps([]))
+    sys.exit()
 
-# Địa điểm cần tìm tương tự
-user_input = "Chùa Một Cột"
+input_title = sys.argv[1]
+input_title_clean = input_title.strip().lower()
+titles = data["title"].str.strip().str.lower()
 
-# Kiểm tra xem tên địa điểm có trong dữ liệu không
-if user_input in cosine_sim_df:
-    top_k = 5  # số lượng địa điểm tương tự muốn lấy
-    recommendations = cosine_sim_df[user_input].sort_values(ascending=False)[1:top_k+1]  # bỏ chính nó
-    print(f"Địa điểm tương tự với '{user_input}':")
-    print(recommendations)
+if input_title_clean in titles.values:
+    index = titles[titles == input_title_clean].index[0]
+    sim_scores = list(enumerate(cosine_sim[index]))
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)[1:6]
+    recommended = data.iloc[[i[0] for i in sim_scores]]
+    result = recommended[["title", "description", "category", "location", "image", "map_link"]].to_dict(orient="records")
+    print(json.dumps(result, ensure_ascii=False))
 else:
-    print(f"Không tìm thấy địa điểm '{user_input}' trong dữ liệu.")
+    print(json.dumps([]))

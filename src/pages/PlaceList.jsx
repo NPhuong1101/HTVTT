@@ -22,9 +22,27 @@ const PlaceList = () => {
       });
   }, []);
 
-  const handleClick = (place) => {
-    navigate(`/destination/${place.ID}`, { state: { place } });
+  const handleClick = async (place) => {
+    try {
+      const response = await fetch('http://localhost:5000/suggest', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: place["Tên địa điểm"] }),
+      });
+  
+      const data = await response.json();
+  
+      navigate(`/destination/${place.ID}`, {
+        state: {
+          place: place,
+          suggestions: data.suggestions
+        }
+      });
+    } catch (error) {
+      console.error("Lỗi khi gọi API gợi ý:", error);
+    }
   };
+  
 
   return (
     <div className="place-list">
