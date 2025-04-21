@@ -27,30 +27,6 @@ const destinations = [
     },
 ];
 
-const services = [
-    {
-        icon: <FaPlane className="text-4xl text-blue-500" />,
-        title: 'Flight Booking',
-        description: 'Flight ticket booking is simple in a few steps.',
-    },
-    {
-        icon: <FaHotel className="text-4xl text-blue-500" />,
-        title: 'Hotel Booking',
-        description: 'Wonderful hotel rooms at discounted prices.',
-    },
-    {
-        icon: <FaUmbrellaBeach className="text-4xl text-blue-500" />,
-        title: 'Beach Tours',
-        description: 'Explore beautiful beaches.',
-    },
-    {
-        icon: <FaConciergeBell className="text-4xl text-blue-500" />,
-        title: 'Concierge Services',
-        description: 'Offering you customized services.',
-    },
-
-];
-
 const PopularDestination = () => {
     return (
         <div className="popular-destination">
@@ -72,25 +48,6 @@ const PopularDestination = () => {
     );
 };
 
-const Services = () => {
-    return (
-        <div className="services-container">
-            <div className="container">
-                <h2 className="tt">Our Services</h2>
-                <div className="services-grid">
-                    {services.map((service, index) => (
-                        <div key={index} className="service-card">
-                            <div className="icon-container">{service.icon}</div>
-                            <h3 className="service-title">{service.title}</h3>
-                            <p className="service-description">{service.description}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </div>
-    );
-};
-
 const Home = () => {
     return (
         <>
@@ -103,7 +60,6 @@ const Home = () => {
                 </div>
             </div>
             <PopularDestination />
-            <Services />
             <Footer />
         </>
     );
