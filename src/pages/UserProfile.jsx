@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./UserProfile.css";
-import Navbar from "./Navbar";
+import Navbar1 from "./Navbar1";
 import Footer from "./Footer";
 import HaNoi from '../assets/HaNoi.jpg';
 import DaNang from '../assets/DaNang.jpg';
@@ -25,7 +25,6 @@ const allDestinations = [
     category: "Biển",
     description: "Thành phố biển với những bãi cát trắng và nước trong xanh.",
     image: NhaTrang || defaultImage,
-    rating: 4.5,
     ratingCount: 250
   },
   {
@@ -34,7 +33,6 @@ const allDestinations = [
     category: "Núi",
     description: "Thành phố ngàn hoa với khí hậu mát mẻ quanh năm.",
     image: DaLat || defaultImage,
-    rating: 4.7,
     ratingCount: 100
   },
   {
@@ -43,7 +41,6 @@ const allDestinations = [
     category: "Văn hóa",
     description: "Cố đô với nhiều di tích lịch sử và nét đẹp văn hóa cổ kính.",
     image: Hue || defaultImage,
-    rating: 4.8,
     ratingCount: 150
   },
   {
@@ -52,7 +49,6 @@ const allDestinations = [
     category: "Biển",
     description: "Hòn đảo thiên đường với những bãi biển tuyệt đẹp và hải sản tươi ngon.",
     image: PhuQuoc || defaultImage,
-    rating: 4.6,
     ratingCount: 200
   },
   {
@@ -61,7 +57,6 @@ const allDestinations = [
     category: "Núi",
     description: "Thiên đường của hoa cải, đồi chè và khí hậu trong lành.",
     image: MocChau || defaultImage,
-    rating: 4.4,
     ratingCount: 300
   }
 ];
@@ -85,7 +80,6 @@ export default function UserProfile() {
       id: 1,
       name: "Hà Nội",
       date: "2024-03-10",
-      rating: "⭐⭐⭐⭐⭐",
       review: "Nơi tuyệt vời để khám phá lịch sử và ẩm thực.",
       image: HaNoi
     },
@@ -93,7 +87,6 @@ export default function UserProfile() {
       id: 2,
       name: "Đà Nẵng",
       date: "2023-12-15",
-      rating: "⭐⭐⭐⭐",
       review: "Biển đẹp, thành phố sạch sẽ và đáng sống.",
       image: DaNang,
     },
@@ -101,7 +94,6 @@ export default function UserProfile() {
       id: 3,
       name: "Phú Quốc",
       date: "2023-07-20",
-      rating: "⭐⭐⭐⭐⭐",
       review: "Hòn đảo tuyệt đẹp với nhiều bãi biển hoang sơ.",
       image: PhuQuoc,
     },
@@ -109,7 +101,7 @@ export default function UserProfile() {
 
   return (
     <div>
-      <Navbar />
+      <Navbar1 />
       <div className="user-profile">
         <div>
           <div className="profile-card">
@@ -132,10 +124,7 @@ export default function UserProfile() {
                   <p><strong>{place.category}</strong></p>
                   <p>{place.description}</p>
                 </div>
-                <div className="rating">
-                  ⭐ {place.rating} <span className="rating-count">({place.ratingCount})</span>
-                </div>
-                <button className="save-button">Save</button>
+                <button className="save-button">View Details</button>
               </div>
             ))}
           </div>

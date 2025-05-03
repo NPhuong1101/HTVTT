@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import './Home.css';
 import Navbar from './Navbar';
 import Footer from './Footer';
@@ -25,30 +25,39 @@ const destinations = [
         title: 'Ho Chi Minh City',
         description: 'Experience the vibrant pulse of the city, known for Ben Thanh Market and an exciting nightlife.',
     },
+    {
+        image: 'src/assets/DaLat.jpg',
+        title: 'Da Lat City',
+        description: 'A romantic highland town known for its cool climate, flower gardens, and pine-covered hills.',
+    },
+    {
+        image: 'src/assets/haiphong.jpg',
+        title: 'Hai Phong City',
+        description: 'A port city with colonial architecture, Do Son beach, and gateway to Cat Ba Island.',
+    },
+    {
+        image: 'src/assets/binhdinh.jpg',
+        title: 'Quy Nhon City',
+        description: 'A rising beach destination with clear blue waters, Ky Co island, and peaceful coastal life.',
+    },
+    {
+        image: 'src/assets/vungtau.jpg',
+        title: 'Vung Tau City',
+        description: 'A popular getaway from Saigon with beautiful beaches, lighthouse, and seafood.',
+    },
 ];
 
-const PopularDestination = () => {
-    return (
-        <div className="popular-destination">
-            <h2 className="tt">Popular Destinations</h2>
-                <div className="container">
-                    <div className="grid-container">
-                        {destinations.map((city, index) => (
-                            <div key={index} className="card">
-                                <img src={city.image} alt={city.title} className="card-image" />
-                                <div className="card-content">
-                                    <h3 className="card-title">{city.title}</h3>
-                                    <p className="card-description">{city.description}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-        </div>
-    );
-};
-
 const Home = () => {
+    const popularRef = useRef(null);
+
+    const scrollLeft = () => {
+        popularRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+    };
+
+    const scrollRight = () => {
+        popularRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+    };
+
     return (
         <>
             <Navbar />
@@ -59,7 +68,26 @@ const Home = () => {
                     <button className="cta-button">Get Started</button>
                 </div>
             </div>
-            <PopularDestination />
+            
+            <section className="section">
+                <h2 className="section-title">Popular Destinations</h2>
+                <div className="carousel">
+                    <button className="nav-button" onClick={scrollLeft}>◀</button>
+                    <div className="item-list" ref={popularRef}>
+                        {destinations.map((city, index) => (
+                            <div className="item card" key={index}>
+                                <img src={city.image} alt={city.title} className="card-image" />
+                                <div className="card-content">
+                                    <h3 className="card-title">{city.title}</h3>
+                                    <p className="card-description">{city.description}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <button className="nav-button" onClick={scrollRight}>▶</button>
+                </div>
+            </section>
+            
             <Footer />
         </>
     );

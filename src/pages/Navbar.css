@@ -71,21 +71,125 @@
     color: white;
 }
 
-.search-box {
-    display: flex;
-}
+.user-section {
+    position: relative;
+    margin-left: 15px;
+  }
   
-.search-input {
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px 0 0 5px;
-}
-
-.search-icon {
-    padding: 5px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-left: none;
-    border-radius: 0 5px 5px 0;
+  .google-style-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
     cursor: pointer;
-}
+    border: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  
+  .user-avatar:hover {
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .google-dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 10px);
+    width: 225px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    animation: fadeIn 0.2s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .dropdown-header {
+    display: flex;
+    padding: 16px;
+    border-bottom: 1px solid #f1f1f1;
+    justify-content: center;
+  }
+  
+  .dropdown-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 12px;
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .user-name {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: #202124;
+  }
+  
+  .user-email {
+    font-size: 0.8rem;
+    color: #5f6368;
+    margin-top: 2px;
+  }
+  
+  .dropdown-main-option {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    color: #1a73e8;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f1f1;
+  }
+  
+  .dropdown-main-option:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .dropdown-divider {
+    height: 0;
+    margin: 8px 0;
+    border-bottom: 1px solid #f1f1f1;
+  }
+  
+  .dropdown-option {
+    padding: 8px 0;
+  }
+  
+  .option {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    color: #3c4043;
+    cursor: pointer;
+  }
+  
+  .option:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .option.logout {
+    color: #5f6368;
+  }
+  
+  .dropdown-footer {
+    display: flex;
+    justify-content: center;
+    padding: 12px 16px;
+    font-size: 0.75rem;
+    color: #5f6368;
+    border-top: 1px solid #f1f1f1;
+  }
+  
+  .dropdown-footer span {
+    margin: 0 5px;
+  }
