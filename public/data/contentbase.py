@@ -5,11 +5,14 @@ import json
 import sys
 import os
 
+# Đường dẫn tới file CSV
 current_dir = os.path.dirname(os.path.abspath(__file__))
 csv_path = os.path.join(current_dir, "Info-trip.csv")
 
+# Đọc dữ liệu
 data = pd.read_csv(csv_path, encoding="utf-8")
 
+# Đổi tên cột
 data.rename(columns={
     "Tên địa điểm": "title",
     "Mô tả": "description",
@@ -19,27 +22,39 @@ data.rename(columns={
     "Link google map": "map_link"
 }, inplace=True)
 
+# Tạo cột nội dung để vector hóa
 data["content"] = data["description"].fillna("") + " " + data["category"].fillna("") + " " + data["location"].fillna("")
 
-# TF-IDF
+# Tính TF-IDF và ma trận cosine similarity
 vectorizer = TfidfVectorizer(stop_words="english")
 tfidf_matrix = vectorizer.fit_transform(data["content"])
 cosine_sim = cosine_similarity(tfidf_matrix)
 
-if len(sys.argv) < 2:
+# Nhận đầu vào từ dòng lệnh
+input_titles = sys.argv[1:]  # Danh sách tên địa điểm
+input_titles_clean = [t.strip().lower() for t in input_titles if t.strip()]
+titles = data["title"].str.strip().str.lower()
+
+# Lấy chỉ số các địa điểm hợp lệ
+input_indices = [titles[titles == t].index[0] for t in input_titles_clean if t in titles.values]
+
+# Nếu không có địa điểm nào hợp lệ thì trả về danh sách rỗng
+if not input_indices:
     print(json.dumps([]))
     sys.exit()
 
-input_title = sys.argv[1]
-input_title_clean = input_title.strip().lower()
-titles = data["title"].str.strip().str.lower()
+# Tính trung bình điểm tương đồng
+similarities = cosine_sim[input_indices]
+avg_similarity = similarities.mean(axis=0)
 
-if input_title_clean in titles.values:
-    index = titles[titles == input_title_clean].index[0]
-    sim_scores = list(enumerate(cosine_sim[index]))
-    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)[1:6]
-    recommended = data.iloc[[i[0] for i in sim_scores]]
-    result = recommended[["title", "description", "category", "location", "image", "map_link"]].to_dict(orient="records")
-    print(json.dumps(result, ensure_ascii=False))
-else:
-    print(json.dumps([]))
+# Loại bỏ địa điểm đầu vào và sắp xếp theo độ tương đồng
+sim_scores = list(enumerate(avg_similarity))
+sim_scores = [s for s in sim_scores if s[0] not in input_indices]
+sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)[:5]
+
+# Lấy danh sách tên địa điểm gợi ý
+recommended = data.iloc[[i[0] for i in sim_scores]]
+result = recommended["title"].tolist()
+
+# In ra kết quả JSON
+print(json.dumps(result, ensure_ascii=False))
