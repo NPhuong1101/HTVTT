@@ -160,16 +160,16 @@ html, body, #root {
 .eye-icon {
   position: absolute;
   top: 70%;
-  right: 14px;         /* Cân chỉnh khoảng cách với mép phải */
+  right: 14px;         
   transform: translateY(-50%);
   font-size: 20px;
   color: #8b8b8b;
   cursor: pointer;
   line-height: 1;
-  height: 100%;         /* Đảm bảo icon dính với input */
+  height: 100%;        
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: auto; /* Đảm bảo icon bấm được */
+  pointer-events: auto;
 }
 

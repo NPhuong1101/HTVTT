@@ -77,7 +77,7 @@ const Destination = () => {
                           <p><strong>{place["Thể loại"]}</strong></p>
                           <p>{place["Mô tả"]}</p>
                         </div>
-                        <div className="rating">⭐ 4.5</div> {/* Hoặc có thể thêm điểm nếu có */}
+                        <div className="rating">⭐ 4.5</div> 
                         <button className="save-button">Save</button>
                       </div>
                     ))

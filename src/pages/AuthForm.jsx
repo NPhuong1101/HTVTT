@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom'; 
 import './AuthForm.css';
 
 const AuthForm = () => {
-  const navigate = useNavigate(); // Hook to navigate programmatically
+  const navigate = useNavigate(); 
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     username: '',
@@ -45,7 +45,7 @@ const AuthForm = () => {
         formData.password === fixedAccount.password
       ) {
         alert('Đăng nhập thành công!');
-        navigate('/main'); // Navigate to the MainPage component
+        navigate('/main');
       } else {
         alert('Email hoặc mật khẩu không đúng!');
       }

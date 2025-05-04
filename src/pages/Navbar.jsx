@@ -22,7 +22,6 @@ const Navbar = () => {
                     <a className="nav-item">Home</a>
                     <a className="nav-item">Popular Destinations</a>
                     <a className="nav-item">Contact</a>
-                    <a className="nav-item">Search</a>
                 </div>
                 <button className="login-btn" onClick={handleLoginClick}>Login</button>
                 <div className="mobile-menu">☰</div>

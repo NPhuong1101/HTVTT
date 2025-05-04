@@ -25,8 +25,8 @@ const Navbar1 = () => {
   };
 
   const handleManageAccount = () => {
-    setShowDropdown(false); // Đóng dropdown sau khi bấm
-    navigate('/profile');   // Điều hướng đến UserProfile.jsx
+    setShowDropdown(false); 
+    navigate('/profile');  
   };
 
   return (
@@ -42,7 +42,7 @@ const Navbar1 = () => {
           <a className="nav-item">Popular Destinations</a>
           <a className="nav-item">Suggestions for You</a>
           <a className="nav-item">Contact</a>
-          <a className="nav-item">Search</a>
+          <a className="nav-item" onClick={() => navigate('/search')}>Search</a>
         </div>
 
         <div className="user-section" ref={dropdownRef}>
