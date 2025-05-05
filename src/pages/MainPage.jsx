@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import './MainPage.css';
-import Navbar1 from './Navbar1';
+import Navbar from './Navbar';
 import Footer from './Footer';
 
 const destinations = [
@@ -89,7 +89,7 @@ const MainPage = () => {
 
   return (
     <>
-      <Navbar1 />
+      <Navbar />
       <div className="home-container">
         <div className="overlay">
             <h1 className="title">Explore the World with Us</h1>
